@@ -32,7 +32,7 @@ class SDK
     /**
      * @return array
      */
-    public function getProviders(): mixed
+    public function getProviders(): array
     {
         return $this->providers;
     }
