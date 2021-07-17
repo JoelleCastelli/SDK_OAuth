@@ -1,0 +1,31 @@
+{
+    "scratch": {
+        "id": "client_60a3778e70ef02.05413444",
+        "secret": "cd989e9a4b572963e23fe39dc14c22bbceda0e60",
+        "base_url": "http://localhost",
+        "access_token_url":" https://auth-server/token?",
+        "me_url": "/me"
+    },
+    "facebook": {
+        "id": "3648086378647793",
+        "secret": "1b5d764e7a527c2b816259f575a59942",
+        "base_url": "https://graph.facebook.com",
+        "access_token_url": "/oauth/access_token?",
+        "me_url": "/me"
+    },
+    "github": {
+        "id": "4c2042e06160a434",
+        "secret": "ec6818cdb0295569da5a1316e294122bd207e8f8" ,
+        "base_url": "https://api.github.com",
+        "access_token_url": "/oauth/token",
+        "me_url": "/me"
+    },
+    "gitlab": {
+        "id": "a291fbe5eca45e1dc2f4e64c6c1ce57c7e157ec0be7f057962f5d92a27c02de0",
+        "secret": "c5dd8f4192e93ef398de9c568beda5ce2ffda58a3c19e71295d3506a583edd0f",
+        "base_url": "https://gitlab.com",
+        "access_token_url": "/oauth/token",
+        "callback_url" : "https://localhost/auth-success",
+        "me_url": "/user"
+    }
+}
