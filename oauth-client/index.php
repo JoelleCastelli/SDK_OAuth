@@ -10,8 +10,6 @@ const CLIENT_SECRET = "cd989e9a4b572963e23fe39dc14c22bbceda0e60";
 const CLIENT_FBSECRET = "1b5d764e7a527c2b816259f575a59942";
 const STATE = "fdzefzefze";
 
-
-
 function handleLogin()
 {
     // http://.../auth?response_type=code&client_id=...&scope=...&state=...
@@ -92,7 +90,7 @@ function getUser($params)
 $route = strtok($_SERVER["REQUEST_URI"], "?");
 switch ($route) {
     case '/login':
-        handleLogin();
+        $sdk->displaylogin();
         break;
     case '/auth-success':
         handleSuccess();
