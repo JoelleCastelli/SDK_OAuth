@@ -3,29 +3,7 @@
 require 'Autoload.php';
 Autoload::register();
 $sdk = new SDK();
-
-const CLIENT_ID = "client_60a3778e70ef02.05413444";
-const CLIENT_FBID = "3648086378647793";
-const CLIENT_SECRET = "cd989e9a4b572963e23fe39dc14c22bbceda0e60";
-const CLIENT_FBSECRET = "1b5d764e7a527c2b816259f575a59942";
 const STATE = "fdzefzefze";
-
-
-
-function handleLogin()
-{
-    // http://.../auth?response_type=code&client_id=...&scope=...&state=...
-    echo "<h1>Login with OAUTH</h1>";
-    echo "<a href='http://localhost:8081/auth?response_type=code"
-        . "&client_id=" . CLIENT_ID
-        . "&scope=basic"
-        . "&state=" . STATE . "'>Se connecter avec Oauth Server</a>";
-    echo "<a href='https://www.facebook.com/v2.10/dialog/oauth?response_type=code"
-        . "&client_id=" . CLIENT_FBID
-        . "&scope=email"
-        . "&state=" . STATE
-        . "&redirect_uri=https://localhost/fbauth-success'>Se connecter avec Facebook</a>";
-}
 
 function handleError()
 {
@@ -92,7 +70,7 @@ function getUser($params)
 $route = strtok($_SERVER["REQUEST_URI"], "?");
 switch ($route) {
     case '/login':
-        handleLogin();
+        $sdk->handleLogin();
         break;
     case '/auth-success':
         handleSuccess();

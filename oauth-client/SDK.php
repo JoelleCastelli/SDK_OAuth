@@ -41,5 +41,18 @@ class SDK
         $this->providers = $providers;
     }
 
+    function handleLogin()
+    {
+        $str = '';
+        foreach ($this->getProviders() as $provider) {
+            $redirect = $provider['redirect_uri'] ? "&redirect_uri=".$provider['redirect_uri'] : '';
+
+            $str .= "<div><a href='".$provider['login_url']."?response_type=code"
+                . "&client_id=" . $provider['id']
+                . "&scope=" . $provider['scope']
+                . "&state=" . STATE . "$redirect'>Se connecter avec ". $provider['name']."</a></div>";
+        }
+        echo $str;
+    }
 
 }
