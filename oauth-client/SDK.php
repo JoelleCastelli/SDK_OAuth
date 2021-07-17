@@ -30,7 +30,7 @@ class SDK
     }
 
     /**
-     * @return array|mixed
+     * @return array
      */
     public function getProviders(): mixed
     {
@@ -88,7 +88,7 @@ class SDK
             throw new RuntimeException("{$state} : invalid state");
         }
         // https://auth-server/token?grant_type=authorization_code&code=...&client_id=..&client_secret=...
-        getUser([
+        $this->getUser([
             'grant_type' => "authorization_code",
             "code" => $code,
         ]);
