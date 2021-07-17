@@ -3,6 +3,8 @@
         "id": "client_60a3778e70ef02.05413444",
         "name": "OAuth Server",
         "secret": "cd989e9a4b572963e23fe39dc14c22bbceda0e60",
+        "login_url" : "http://localhost:8081/auth",
+        "scope" : "basic",
         "base_url": "http://localhost",
         "access_token_url":" https://auth-server/token?",
         "me_url": "/me"
@@ -11,6 +13,9 @@
         "id": "3648086378647793",
         "name": "Facebook",
         "secret": "1b5d764e7a527c2b816259f575a59942",
+        "login_url" : "https://www.facebook.com/v2.10/dialog/oauth",
+        "redirect_uri" : "https://localhost/fbauth-success",
+        "scope" : "email",
         "base_url": "https://graph.facebook.com",
         "access_token_url": "/oauth/access_token?",
         "me_url": "/me"
