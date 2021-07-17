@@ -71,7 +71,7 @@ switch ($route) {
     case '/login':
         $sdk->handleLogin();
         break;
-    case '/auth-success':
+    case '/auth':
         handleSuccess();
         break;
     case '/fbauth-success':
