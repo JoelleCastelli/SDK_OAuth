@@ -10,8 +10,8 @@
         "me_url": "/me"
     },
     "facebook": {
-        "id": "3648086378647793",
         "name": "Facebook",
+        "id": "3648086378647793",
         "secret": "1b5d764e7a527c2b816259f575a59942",
         "login_url" : "https://www.facebook.com/v2.10/dialog/oauth",
         "scope" : "email",
@@ -20,17 +20,23 @@
         "me_url": "/me"
     },
     "github": {
-        "id": "4c2042e06160a434",
         "name": "GitHub",
-        "secret": "ec6818cdb0295569da5a1316e294122bd207e8f8" ,
+        "id": "4c2042e06160a434",
+        "secret": "ec6818cdb0295569da5a1316e294122bd207e8f8",
+        "scope" : "basic",
+        "login_url" : "https://github.com/login/oauth/authorize",
+        "redirect_uri" : "https://localhost/auth-success",
         "base_url": "https://api.github.com",
         "access_token_url": "/oauth/token",
         "me_url": "/me"
     },
     "gitlab": {
-        "id": "a291fbe5eca45e1dc2f4e64c6c1ce57c7e157ec0be7f057962f5d92a27c02de0",
         "name": "GitLab",
+        "id": "a291fbe5eca45e1dc2f4e64c6c1ce57c7e157ec0be7f057962f5d92a27c02de0",
         "secret": "c5dd8f4192e93ef398de9c568beda5ce2ffda58a3c19e71295d3506a583edd0f",
+        "login_url" : "https://gitlab.com/oauth/authorize",
+        "redirect_uri" : "https://localhost/auth-success",
+        "scope" : "read_user+profile",
         "base_url": "https://gitlab.com",
         "access_token_url": "/oauth/token",
         "callback_url" : "https://localhost/auth-success",
