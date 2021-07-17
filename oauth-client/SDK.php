@@ -99,17 +99,19 @@ class SDK
 
     function getUser($params)
     {
-        $url = "http://oauth-server:8081/token?client_id=" . CLIENT_ID . "&client_secret=" . CLIENT_SECRET . "&" . http_build_query($params);
-        $result = file_get_contents($url);
-        $result = json_decode($result, true);
-        $token = $result['access_token'];
+        foreach ($this->getProviders() as $provider) {
+            $url = $provider['base_url'] . $provider['access_token_url'] . $provider['id'] . "&client_secret=" . $provider['secret'] . "&" . http_build_query($params);
+            $result = file_get_contents($url);
+            $result = json_decode($result, true);
+            $token = $result['access_token'];
 
-        $apiUrl = "http://oauth-server:8081/me";
-        $context = stream_context_create([
-            'http' => [
-                'header' => 'Authorization: Bearer ' . $token
-            ]
-        ]);
+            // $apiUrl = "http://oauth-server:8081/me";
+            // $context = stream_context_create([
+            //     'http' => [
+            //         'header' => 'Authorization: Bearer ' . $token
+            //     ]
+            // ]);
+        }
         echo file_get_contents($apiUrl, false, $context);
     }
 
