@@ -3,7 +3,6 @@
 require 'Autoload.php';
 Autoload::register();
 $sdk = new SDK();
-const STATE = "fdzefzefze";
 
 function handleError()
 {

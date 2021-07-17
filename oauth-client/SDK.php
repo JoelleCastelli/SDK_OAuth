@@ -5,6 +5,7 @@ class SDK
 {
     private string $configFile = 'providers.json';
     protected array $providers;
+    protected string $state = "fdzefzefze";
 
     public function __construct()
     {
@@ -41,6 +42,22 @@ class SDK
         $this->providers = $providers;
     }
 
+    /**
+     * @return string
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
+    }
+
     function handleLogin()
     {
         $str = '';
@@ -50,7 +67,7 @@ class SDK
             $str .= "<div><a href='".$provider['login_url']."?response_type=code"
                 . "&client_id=" . $provider['id']
                 . "&scope=" . $provider['scope']
-                . "&state=" . STATE . "$redirect'>Se connecter avec ". $provider['name']."</a></div>";
+                . "&state=" . $this->getState() . "$redirect'>Se connecter avec ". $provider['name']."</a></div>";
         }
         echo $str;
     }
