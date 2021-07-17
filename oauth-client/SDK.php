@@ -65,12 +65,11 @@ class SDK
     {
         $str = '';
         foreach ($this->getProviders() as $provider) {
-            $redirect = $provider['redirect_uri'] ? "&redirect_uri=".$provider['redirect_uri'] : '';
-
             $str .= "<div><a href='".$provider['login_url']."?response_type=code"
                 . "&client_id=" . $provider['id']
                 . "&scope=" . $provider['scope']
-                . "&state=" . $this->getState() . "$redirect'>Se connecter avec ". $provider['name']."</a></div>";
+                . "&state=" . $this->getState()
+                . "&redirect_uri=http://localhost:8081/auth-success?provider=".$provider['name']."'>Se connecter avec ". $provider['name']."</a></div>";
         }
         echo $str;
     }
@@ -83,8 +82,10 @@ class SDK
 
     function handleSuccess()
     {
-        ["state" => $state, "code" => $code] = $_GET;
-        if ($state !== STATE) {
+        var_dump('ici');
+        ["state" => $state, "code" => $code, "provider" => $provider] = $_GET;
+        var_dump($provider);
+        if ($state !== $this->getState()) {
             throw new RuntimeException("{$state} : invalid state");
         }
         // https://auth-server/token?grant_type=authorization_code&code=...&client_id=..&client_secret=...
