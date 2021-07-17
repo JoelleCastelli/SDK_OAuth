@@ -35,7 +35,7 @@
         "id": "a291fbe5eca45e1dc2f4e64c6c1ce57c7e157ec0be7f057962f5d92a27c02de0",
         "secret": "c5dd8f4192e93ef398de9c568beda5ce2ffda58a3c19e71295d3506a583edd0f",
         "login_url" : "https://gitlab.com/oauth/authorize",
-        "redirect_uri" : "https://localhost/auth-success",
+        "redirect_uri" : "https://localhost/auth-success?provider=GitLab",
         "scope" : "read_user",
         "base_url": "https://gitlab.com",
         "access_token_url": "/oauth/token",

@@ -65,12 +65,14 @@ class SDK
     function handleLogin()
     {
         $str = '';
+        $_SESSION['state'] = bin2hex(random_bytes(20));
         foreach ($this->getProviders() as $provider) {
+            $redirect = $provider['redirect_uri'] ? "&redirect_uri=".$provider['redirect_uri'] : '';
+
             $str .= "<div><a href='".$provider['login_url']."?response_type=code"
                 . "&client_id=" . $provider['id']
                 . "&scope=" . $provider['scope']
-                . "&state=" . $this->getState()
-                . "&redirect_uri=http://localhost:8081/auth-success?provider=".$provider['name']."'>Se connecter avec ". $provider['name']."</a></div>";
+                . "&state=" . $_SESSION['state'] . "$redirect'>Se connecter avec ". $provider['name']."</a></div>";
         }
         echo $str;
     }
@@ -83,37 +85,16 @@ class SDK
 
     function handleSuccess()
     {
-        var_dump('ici');
         ["state" => $state, "code" => $code, "provider" => $provider] = $_GET;
-        var_dump($provider);
-        if ($state !== $this->getState()) {
+        if ($state !== $_SESSION['state']) {
             throw new RuntimeException("{$state} : invalid state");
         }
-        // https://auth-server/token?grant_type=authorization_code&code=...&client_id=..&client_secret=...
+
         $this->getUser([
+            'provider' => $provider,
             'grant_type' => "authorization_code",
             "code" => $code,
         ]);
-    }
-
-    function handleFbSuccess()
-    {
-        ["state" => $state, "code" => $code] = $_GET;
-        if ($state !== STATE) {
-            throw new RuntimeException("{$state} : invalid state");
-        }
-        // https://auth-server/token?grant_type=authorization_code&code=...&client_id=..&client_secret=...
-        $url = "https://graph.facebook.com/oauth/access_token?grant_type=authorization_code&code={$code}&client_id=" . CLIENT_FBID . "&client_secret=" . CLIENT_FBSECRET."&redirect_uri=https://localhost/fbauth-success";
-        $result = file_get_contents($url);
-        $resultDecoded = json_decode($result, true);
-        ["access_token"=> $token] = $resultDecoded;
-        $userUrl = "https://graph.facebook.com/me?fields=id,name,email";
-        $context = stream_context_create([
-            'http' => [
-                'header' => 'Authorization: Bearer ' . $token
-            ]
-        ]);
-        echo file_get_contents($userUrl, false, $context);
     }
 
     function getUser($params)

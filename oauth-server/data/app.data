@@ -1,1 +1,2 @@
 a:6:{s:9:"client_id";s:30:"client_60f2f5ed60b4f8.90497827";s:13:"client_secret";s:40:"cb667a04c93768f96fd0d556f6197e4008e77b1d";s:4:"name";s:5:"Test3";s:3:"uri";s:21:"http://localhost:8081";s:16:"redirect_success";s:34:"http://localhost:8081/auth-success";s:14:"redirect_error";s:33:"http://localhost:8081/auth-cancel";}
+a:2:{s:9:"client_id";s:30:"client_60f3172f4f7c59.17525929";s:13:"client_secret";s:40:"9b004becc599707e2a88e98680439299f6c03086";}

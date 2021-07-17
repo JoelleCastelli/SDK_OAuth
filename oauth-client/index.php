@@ -4,6 +4,8 @@ require 'Autoload.php';
 Autoload::register();
 $sdk = new SDK();
 
+session_start();
+
 /**
  * AUTH CODE WORKFLOW
  * => Generate link (/login)
@@ -18,9 +20,6 @@ switch ($route) {
         break;
     case '/auth-success':
         $sdk->handleSuccess();
-        break;
-    case '/fbauth-success':
-        $sdk->handleFbSuccess();
         break;
     case '/auth-cancel':
         $sdk->handleError();
