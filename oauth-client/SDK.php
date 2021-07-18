@@ -100,11 +100,11 @@ class SDK
             "redirect_uri" => "https://localhost/auth-success?provider=$provider"
         ];
 
-        $this->getUser($provider, $params);
+        $token = $this->getToken($provider, $params);
+        $this->getUser($provider, $token);
     }
 
-    function getUser($providerName, $params)
-    {
+    function getToken($providerName, $params) {
         foreach ($this->getProviders() as $provider => $data) {
             if($provider == $providerName) {
                 $url = $data['access_token_url'] . "?client_id=" .$data['id']
@@ -120,13 +120,21 @@ class SDK
                     $token = explode("=", $string)[1];
                 }
 
+                return $token;
+            }
+        }
+    }
+
+    function getUser($providerName, $token)
+    {
+        foreach ($this->getProviders() as $provider => $data) {
+            if($provider == $providerName) {
                 $apiUrl = $data['me_url'];
                 $context = stream_context_create([
                     'http' => [
                         'header' => 'Authorization: Bearer ' . $token
                     ]
                 ]);
-
                 echo file_get_contents($apiUrl, false, $context);
             }
         }
