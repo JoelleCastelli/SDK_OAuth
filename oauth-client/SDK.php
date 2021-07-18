@@ -105,10 +105,10 @@ class SDK
 
     function getUser($providerName, $params)
     {
-        foreach ($this->getProviders() as $provider) {
-            if($provider['name'] == $providerName) {
-                $url = $provider['access_token_url'] . "?client_id=" .$provider['id'] 
-                . "&client_secret=" . $provider['secret'] 
+        foreach ($this->getProviders() as $provider => $data) {
+            if($provider == $providerName) {
+                $url = $data['access_token_url'] . "?client_id=" .$data['id']
+                . "&client_secret=" . $data['secret']
                 . "&" . http_build_query($params);
 
                 $result = file_get_contents($url);
@@ -120,7 +120,7 @@ class SDK
                     $token = explode("=", $string)[1];
                 }
 
-                $apiUrl = $provider['me_url'];
+                $apiUrl = $data['me_url'];
                 $context = stream_context_create([
                     'http' => [
                         'header' => 'Authorization: Bearer ' . $token
