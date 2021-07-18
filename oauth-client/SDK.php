@@ -66,15 +66,15 @@ class SDK
         $str = '';
         // TODO un state par provider ? => $_SESSION[$provider['name']]['state']
         $_SESSION['state'] = bin2hex(random_bytes(20));
-        foreach ($this->getProviders() as $provider) {
+        foreach ($this->getProviders() as $provider => $data) {
             $str .= "<div>
-                <a href='".$provider['login_url']
+                <a href='".$data['login_url']
                 . "?response_type=code"
-                . "&client_id=" . $provider['id']
-                . "&scope=" . $provider['scope']
+                . "&client_id=" . $data['id']
+                . "&scope=" . $data['scope']
                 . "&state=" . $_SESSION['state']
-                . "&redirect_uri=https://localhost/auth-success?provider=".$provider['name'] . "'>
-                Se connecter avec ". $provider['name']."
+                . "&redirect_uri=https://localhost/auth-success?provider=".$provider . "'>
+                Se connecter avec ". $data['name']."
                 </a>
             </div>";
         }
