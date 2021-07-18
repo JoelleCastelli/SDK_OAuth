@@ -50,18 +50,18 @@ class SDK
             throw new RuntimeException("{$state} : invalid state");
         }
 
+        $token = $this->getToken($provider, $code);
+        $user = $this->getUser($provider, $token);
+        echo $user;
+    }
+
+    function getToken($providerName, $code) {
+        $provider = $this->getProviders()[$providerName];
         $params = [
             'grant_type' => "authorization_code",
             "code" => $code,
-            "redirect_uri" => "https://localhost/auth-success?provider=$provider"
+            "redirect_uri" => "https://localhost/auth-success?provider=$providerName"
         ];
-
-        $token = $this->getToken($provider, $params);
-        $this->getUser($provider, $token);
-    }
-
-    function getToken($providerName, $params) {
-        $provider = $this->getProviders()[$providerName];
 
         $url = $provider['access_token_url'] . "?client_id=" .$provider['id']
         . "&client_secret=" . $provider['secret']
@@ -79,7 +79,7 @@ class SDK
         return $token;
     }
 
-    function getUser($providerName, $token)
+    function getUser($providerName, $token): bool|string
     {
         $provider = $this->getProviders()[$providerName];
         $userUrl = $provider['me_url'];
@@ -88,7 +88,7 @@ class SDK
                 'header' => 'Authorization: Bearer ' . $token
             ]
         ]);
-        echo file_get_contents($userUrl, false, $context);
+        return file_get_contents($userUrl, false, $context);
     }
 
     public function isJson($string): bool
