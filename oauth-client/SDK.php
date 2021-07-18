@@ -11,7 +11,6 @@ class SDK
     {
         $str = file_get_contents($this->configFile);
         $this->providers = json_decode($str, true);
-        $this->state = bin2hex(random_bytes(20));
     }
 
     /**
