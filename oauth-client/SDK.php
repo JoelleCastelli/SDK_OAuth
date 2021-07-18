@@ -111,14 +111,13 @@ class SDK
                 . "&client_secret=" . $provider['secret'] 
                 . "&" . http_build_query($params);
 
-                if(in_array($this->data["name"], ["Github"])){
-                    $result = $this->callback($this->uriAuth, $params);
-                    $string = explode("&", $result, 2)[0];
-                    $access_token = explode("=", $string)[1];
-                }else{
-                    $surl = "{$this->uriAuth}?".http_build_query($params);
-                    $result = json_decode(file_get_contents($surl), true);
-                    ['access_token' => $access_token] = $result;
+                $result = file_get_contents($url);
+                if($this->isJson($result)) {
+                    $result = json_decode($result, true);
+                    $token = $result['access_token'];
+                } else {
+                    $string = explode("&", $result)[0];
+                    $token = explode("=", $string)[1];
                 }
 
                 $apiUrl = $provider['me_url'];
@@ -131,6 +130,12 @@ class SDK
                 echo file_get_contents($apiUrl, false, $context);
             }
         }
+    }
+
+    public function isJson($string): bool
+    {
+        json_decode($string, true);
+        return json_last_error() === JSON_ERROR_NONE;
     }
 
 }
