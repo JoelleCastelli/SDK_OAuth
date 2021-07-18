@@ -21,14 +21,14 @@
     },
     "github": {
         "name": "GitHub",
-        "id": "4c2042e06160a434",
-        "secret": "ec6818cdb0295569da5a1316e294122bd207e8f8",
+        "id": "21ccc229313ae8fe871e",
+        "secret": "bce1bf817745f993e0a8ef8477c737a0b7eea2e4",
         "scope" : "basic",
         "login_url" : "https://github.com/login/oauth/authorize",
-        "redirect_uri" : "https://localhost/auth-success",
+        "redirect_uri" : "https://localhost/auth-success?provider=GitHub",
         "base_url": "https://api.github.com",
-        "access_token_url": "/oauth/token",
-        "me_url": "/me"
+        "access_token_url": "https://github.com/login/oauth/access_token",
+        "me_url": "/user"
     },
     "gitlab": {
         "name": "GitLab",

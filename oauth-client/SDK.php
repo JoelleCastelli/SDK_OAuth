@@ -90,27 +90,32 @@ class SDK
             throw new RuntimeException("{$state} : invalid state");
         }
 
-        $this->getUser([
-            'provider' => $provider,
+        $this->getUser($provider, [
             'grant_type' => "authorization_code",
             "code" => $code,
         ]);
     }
 
-    function getUser($params)
+    function getUser($providerName, $params)
     {
         foreach ($this->getProviders() as $provider) {
-            $url = $provider['base_url'] . $provider['access_token_url'] . $provider['id'] . "&client_secret=" . $provider['secret'] . "&" . http_build_query($params);
-            $result = file_get_contents($url);
-            $result = json_decode($result, true);
-            $token = $result['access_token'];
+            if($provider['name'] == $providerName)
+            {
+                $url = $provider['access_token_url'] . "?client_id=" .$provider['id'] 
+                . "&client_secret=" . $provider['secret'] 
+                . "&" . http_build_query($params);
 
-            // $apiUrl = "http://oauth-server:8081/me";
-            // $context = stream_context_create([
-            //     'http' => [
-            //         'header' => 'Authorization: Bearer ' . $token
-            //     ]
-            // ]);
+                $result = file_get_contents($url);
+                $result = json_decode($result, true);
+                $token = $result['access_token'];
+
+                $apiUrl = $provider['base_url'].$provider['me_url'];
+                $context = stream_context_create([
+                    'http' => [
+                        'header' => 'Authorization: Bearer ' . $token
+                    ]
+                ]);
+            }
         }
         echo file_get_contents($apiUrl, false, $context);
     }
