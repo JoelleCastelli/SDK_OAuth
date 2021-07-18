@@ -16,8 +16,7 @@
         "login_url" : "https://www.facebook.com/v2.10/dialog/oauth",
         "redirect_uri" : "https://localhost/auth-success?provider=Facebook",
         "scope" : "email",
-        "base_url": "https://graph.facebook.com",
-        "access_token_url": "/oauth/access_token?",
+        "access_token_url": "https://graph.facebook.com/oauth/access_token",
         "me_url": "/me"
     },
     "github": {

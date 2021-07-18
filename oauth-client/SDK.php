@@ -94,17 +94,18 @@ class SDK
             throw new RuntimeException("{$state} : invalid state");
         }
 
-        $this->getUser($provider, [
-            'grant_type' => "authorization_code",
-            "code" => $code,
-        ]);
+        $params = ['grant_type' => "authorization_code", "code" => $code];
+        if ($provider == 'Facebook') {
+            $params["redirect_uri"] = "https://localhost/auth-success?provider=Facebook";
+        }
+
+        $this->getUser($provider, $params);
     }
 
     function getUser($providerName, $params)
     {
         foreach ($this->getProviders() as $provider) {
-            if($provider['name'] == $providerName)
-            {
+            if($provider['name'] == $providerName) {
                 $url = $provider['access_token_url'] . "?client_id=" .$provider['id'] 
                 . "&client_secret=" . $provider['secret'] 
                 . "&" . http_build_query($params);
@@ -119,9 +120,10 @@ class SDK
                         'header' => 'Authorization: Bearer ' . $token
                     ]
                 ]);
+
+                echo file_get_contents($apiUrl, false, $context);
             }
         }
-        echo file_get_contents($apiUrl, false, $context);
     }
 
 }
