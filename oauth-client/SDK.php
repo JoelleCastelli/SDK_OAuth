@@ -94,10 +94,11 @@ class SDK
             throw new RuntimeException("{$state} : invalid state");
         }
 
-        $params = ['grant_type' => "authorization_code", "code" => $code];
-        if ($provider == 'Facebook') {
-            $params["redirect_uri"] = "https://localhost/auth-success?provider=Facebook";
-        }
+        $params = [
+            'grant_type' => "authorization_code",
+            "code" => $code,
+            "redirect_uri" => "https://localhost/auth-success?provider=$provider"
+        ];
 
         $this->getUser($provider, $params);
     }
