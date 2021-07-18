@@ -1,11 +1,10 @@
 {
     "scratch": {
-        "id": "client_60f2f5ed60b4f8.90497827",
         "name": "OAuth_Server",
+        "id": "client_60f2f5ed60b4f8.90497827",
         "secret": "cb667a04c93768f96fd0d556f6197e4008e77b1d",
         "login_url" : "http://localhost:8081/auth",
         "scope" : "basic",
-        "base_url": "http://localhost",
         "access_token_url":" https://auth-server/token?",
         "me_url": "/me"
     },
@@ -14,7 +13,6 @@
         "id": "547342263115108",
         "secret": "ce46d8a124deb9767e15fa046a9824de",
         "login_url" : "https://www.facebook.com/v2.10/dialog/oauth",
-        "redirect_uri" : "https://localhost/auth-success?provider=Facebook",
         "scope" : "email",
         "access_token_url": "https://graph.facebook.com/oauth/access_token",
         "me_url": "https://graph.facebook.com/me?fields=id,name,email"
@@ -23,9 +21,8 @@
         "name": "GitHub",
         "id": "21ccc229313ae8fe871e",
         "secret": "bce1bf817745f993e0a8ef8477c737a0b7eea2e4",
-        "scope" : "basic",
         "login_url" : "https://github.com/login/oauth/authorize",
-        "redirect_uri" : "https://localhost/auth-success?provider=GitHub",
+        "scope" : "basic",
         "access_token_url": "https://github.com/login/oauth/access_token",
         "me_url": "https://api.github.com/user"
     },
@@ -34,10 +31,8 @@
         "id": "a291fbe5eca45e1dc2f4e64c6c1ce57c7e157ec0be7f057962f5d92a27c02de0",
         "secret": "c5dd8f4192e93ef398de9c568beda5ce2ffda58a3c19e71295d3506a583edd0f",
         "login_url" : "https://gitlab.com/oauth/authorize",
-        "redirect_uri" : "https://localhost/auth-success?provider=GitLab",
         "scope" : "read_user",
         "access_token_url": "https://gitlab.com/oauth/token",
-        "callback_url" : "https://localhost/auth-success",
         "me_url": "https://gitlab.com/user"
     }
 }
