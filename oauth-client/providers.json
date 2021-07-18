@@ -17,7 +17,7 @@
         "redirect_uri" : "https://localhost/auth-success?provider=Facebook",
         "scope" : "email",
         "access_token_url": "https://graph.facebook.com/oauth/access_token",
-        "me_url": "/me"
+        "me_url": "https://graph.facebook.com/me?fields=id,name,email"
     },
     "github": {
         "name": "GitHub",
