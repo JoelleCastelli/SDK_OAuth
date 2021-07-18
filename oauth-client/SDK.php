@@ -111,9 +111,15 @@ class SDK
                 . "&client_secret=" . $provider['secret'] 
                 . "&" . http_build_query($params);
 
-                $result = file_get_contents($url);
-                $result = json_decode($result, true);
-                $token = $result['access_token'];
+                if(in_array($this->data["name"], ["Github"])){
+                    $result = $this->callback($this->uriAuth, $params);
+                    $string = explode("&", $result, 2)[0];
+                    $access_token = explode("=", $string)[1];
+                }else{
+                    $surl = "{$this->uriAuth}?".http_build_query($params);
+                    $result = json_decode(file_get_contents($surl), true);
+                    ['access_token' => $access_token] = $result;
+                }
 
                 $apiUrl = $provider['me_url'];
                 $context = stream_context_create([
