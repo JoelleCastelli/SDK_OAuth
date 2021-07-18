@@ -51,6 +51,7 @@ class SDK
         }
 
         $token = $this->getToken($provider, $code);
+        var_dump($token);die();
         $user = $this->getUser($provider, $token);
         echo $user;
     }
@@ -79,7 +80,7 @@ class SDK
         return $token;
     }
 
-    function getUser($providerName, $token): bool|string
+    function getUser($providerName, $token)
     {
         $provider = $this->getProviders()[$providerName];
         $userUrl = $provider['me_url'];
