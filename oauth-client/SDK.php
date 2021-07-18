@@ -114,7 +114,7 @@ class SDK
                 $result = json_decode($result, true);
                 $token = $result['access_token'];
 
-                $apiUrl = $provider['base_url'].$provider['me_url'];
+                $apiUrl = $provider['me_url'];
                 $context = stream_context_create([
                     'http' => [
                         'header' => 'Authorization: Bearer ' . $token

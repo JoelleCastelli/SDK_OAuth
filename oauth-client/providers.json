@@ -26,9 +26,8 @@
         "scope" : "basic",
         "login_url" : "https://github.com/login/oauth/authorize",
         "redirect_uri" : "https://localhost/auth-success?provider=GitHub",
-        "base_url": "https://api.github.com",
         "access_token_url": "https://github.com/login/oauth/access_token",
-        "me_url": "/user"
+        "me_url": "https://api.github.com/user"
     },
     "gitlab": {
         "name": "GitLab",
@@ -37,9 +36,8 @@
         "login_url" : "https://gitlab.com/oauth/authorize",
         "redirect_uri" : "https://localhost/auth-success?provider=GitLab",
         "scope" : "read_user",
-        "base_url": "https://gitlab.com",
-        "access_token_url": "/oauth/token",
+        "access_token_url": "https://gitlab.com/oauth/token",
         "callback_url" : "https://localhost/auth-success",
-        "me_url": "/user"
+        "me_url": "https://gitlab.com/user"
     }
 }
