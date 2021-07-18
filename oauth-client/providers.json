@@ -11,9 +11,10 @@
     },
     "facebook": {
         "name": "Facebook",
-        "id": "3648086378647793",
-        "secret": "1b5d764e7a527c2b816259f575a59942",
+        "id": "547342263115108",
+        "secret": "ce46d8a124deb9767e15fa046a9824de",
         "login_url" : "https://www.facebook.com/v2.10/dialog/oauth",
+        "redirect_uri" : "https://localhost/auth-success?provider=Facebook",
         "scope" : "email",
         "base_url": "https://graph.facebook.com",
         "access_token_url": "/oauth/access_token?",

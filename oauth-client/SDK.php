@@ -64,14 +64,21 @@ class SDK
     function handleLogin()
     {
         $str = '';
+        // TODO un state par provider ? => $_SESSION[$provider['name']]['state']
         $_SESSION['state'] = bin2hex(random_bytes(20));
         foreach ($this->getProviders() as $provider) {
             $redirect = $provider['redirect_uri'] ? "&redirect_uri=".$provider['redirect_uri'] : '';
 
-            $str .= "<div><a href='".$provider['login_url']."?response_type=code"
+            $str .= "<div>
+                <a href='".$provider['login_url']
+                . "?response_type=code"
                 . "&client_id=" . $provider['id']
                 . "&scope=" . $provider['scope']
-                . "&state=" . $_SESSION['state'] . "$redirect'>Se connecter avec ". $provider['name']."</a></div>";
+                . "&state=" . $_SESSION['state']
+                . "$redirect'>
+                Se connecter avec ". $provider['name']."
+                </a>
+            </div>";
         }
         echo $str;
     }
