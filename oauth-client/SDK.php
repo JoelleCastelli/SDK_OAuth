@@ -73,8 +73,6 @@ class SDK
             curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
             $result = trim(curl_exec($curl));
             curl_close($curl);
-
-            $token = Helpers::getTokenFromResponse($result);
         } else {
             $params = [
                 'grant_type' => "authorization_code",
@@ -87,10 +85,8 @@ class SDK
                 . "&" . http_build_query($params);
     
             $result = file_get_contents($url);
-            $token = Helpers::getTokenFromResponse($result);
         }
-
-        return $token;
+        return Helpers::getTokenFromResponse($result);
     }
 
     function getUser($providerName, $token)
