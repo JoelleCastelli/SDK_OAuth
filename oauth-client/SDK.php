@@ -1,6 +1,6 @@
 <?php
 
-
+require_once __DIR__ . '/Helpers.php';
 class SDK
 {
     private string $configFile = 'providers.json';
@@ -74,7 +74,7 @@ class SDK
             $result = trim(curl_exec($curl));
             curl_close($curl);
 
-            $token = $this->getTokenFromResponse($result);
+            $token = Helpers::getTokenFromResponse($result);
         } else {
             $params = [
                 'grant_type' => "authorization_code",
@@ -87,7 +87,7 @@ class SDK
                 . "&" . http_build_query($params);
     
             $result = file_get_contents($url);
-            $token = $this->getTokenFromResponse($result);
+            $token = Helpers::getTokenFromResponse($result);
         }
 
         return $token;
@@ -115,23 +115,6 @@ class SDK
         $result = curl_exec($userUrl);
         curl_close($userUrl);
         return $result;
-    }
-
-    public function isJson($string): bool
-    {
-        json_decode($string, true);
-        return json_last_error() === JSON_ERROR_NONE;
-    }
-
-    public function getTokenFromResponse($result) {
-        if($this->isJson($result)) {
-            $result = json_decode($result, true);
-            $token = $result['access_token'];
-        } else {
-            $string = explode("&", $result)[0];
-            $token = explode("=", $string)[1];
-        }
-        return $token;
     }
 
 }
