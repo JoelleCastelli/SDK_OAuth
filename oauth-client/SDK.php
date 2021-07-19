@@ -51,7 +51,6 @@ class SDK
         }
 
         $token = $this->getToken($provider, $code);
-        var_dump($token);die();
         $user = $this->getUser($provider, $token);
         echo $user;
     }
@@ -83,13 +82,26 @@ class SDK
     function getUser($providerName, $token)
     {
         $provider = $this->getProviders()[$providerName];
-        $userUrl = $provider['me_url'];
-        $context = stream_context_create([
-            'http' => [
-                'header' => 'Authorization: Bearer ' . $token
-            ]
-        ]);
-        return file_get_contents($userUrl, false, $context);
+
+        // Get userdata with access_token
+        $userUrl = curl_init($provider['me_url']);
+
+        curl_setopt($userUrl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($userUrl, CURLOPT_HEADER, 0);
+        curl_setopt($userUrl, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12");
+
+        if(!empty($body)){
+            curl_setopt($userUrl, CURLOPT_POST, 1);
+            curl_setopt($userUrl, CURLOPT_POSTFIELDS, $body);
+        }else{
+            curl_setopt($userUrl, CURLOPT_HTTPHEADER, [
+                "Authorization: Bearer {$token}"
+            ]);
+        }
+
+        $result = curl_exec($userUrl);
+        curl_close($userUrl);
+        return $result;
     }
 
     public function isJson($string): bool
