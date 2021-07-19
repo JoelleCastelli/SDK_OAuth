@@ -1,8 +1,8 @@
 {
     "scratch": {
         "name": "OAuth_Server",
-        "id": "client_60f2f5ed60b4f8.90497827",
-        "secret": "cb667a04c93768f96fd0d556f6197e4008e77b1d",
+        "id": "client_60f557741a3d16.81030213",
+        "secret": "4c0f7430ce63e3ebed488434286b3097973800c2",
         "login_url" : "http://localhost:8081/auth",
         "scope" : "basic",
         "access_token_url":" https://auth-server/token?",
@@ -10,8 +10,8 @@
     },
     "facebook": {
         "name": "Facebook",
-        "id": "547342263115108",
-        "secret": "ce46d8a124deb9767e15fa046a9824de",
+        "id": "862358508000002",
+        "secret": "d530d12431f3fcd11aa0e4a3c73f3159",
         "login_url" : "https://www.facebook.com/v2.10/dialog/oauth",
         "scope" : "email",
         "access_token_url": "https://graph.facebook.com/oauth/access_token",
