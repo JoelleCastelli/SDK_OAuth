@@ -57,6 +57,7 @@ class SDK
 
     function getToken($providerName, $code) {
         $provider = $this->getProviders()[$providerName];
+
         $params = [
             'grant_type' => "authorization_code",
             "code" => $code,
@@ -64,16 +65,46 @@ class SDK
         ];
 
         $url = $provider['access_token_url'] . "?client_id=" .$provider['id']
-        . "&client_secret=" . $provider['secret']
-        . "&" . http_build_query($params);
+            . "&client_secret=" . $provider['secret']
+            . "&" . http_build_query($params);
 
-        $result = file_get_contents($url);
-        if($this->isJson($result)) {
-            $result = json_decode($result, true);
-            $token = $result['access_token'];
-        } else {
-            $string = explode("&", $result)[0];
-            $token = explode("=", $string)[1];
+        if(isset($provider['method_token']))
+        {
+            $curl = curl_init();
+
+            $curlParams = [
+                CURLOPT_URL =>  $url,
+                CURLOPT_POSTFIELDS => $params,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+            ];
+            var_dump("<br>");
+            var_dump($curlParams);
+            var_dump("<br>");
+
+            curl_setopt_array($curl, $curlParams);
+            $token = curl_exec($curl);
+            var_dump("<br>");
+            var_dump($token);
+            var_dump("<br>");
+        
+            curl_close($curl);
+
+        }else{
+    
+            $result = file_get_contents($url);
+            if($this->isJson($result)) {
+                $result = json_decode($result, true);
+                $token = $result['access_token'];
+            } else {
+                $string = explode("&", $result)[0];
+                $token = explode("=", $string)[1];
+            }
         }
 
         return $token;
