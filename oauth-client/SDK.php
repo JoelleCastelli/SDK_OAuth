@@ -57,9 +57,7 @@ class SDK
     function getToken($providerName, $code) {
         $provider = $this->getProviders()[$providerName];
 
-        if(isset($provider['method_token']))
-        {
-
+        if(isset($provider['method_token']) && $provider['method_token'] == 'POST') {
             $params = "client_id=" .$provider['id']
             . "&client_secret=" . $provider['secret']
             . "&grant_type=authorization_code" 
@@ -69,27 +67,15 @@ class SDK
             $url = $provider['access_token_url'];
 
             $curl = curl_init($url);
-
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($curl, CURLOPT_TIMEOUT, 3);
-
-            // Set request method to POST
             curl_setopt($curl, CURLOPT_POST, 1);
-            // Set query data here with CURLOPT_POSTFIELDS
             curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
-
             $result = trim(curl_exec($curl));
             curl_close($curl);
-            if($this->isJson($result)) {
-                $result = json_decode($result, true);
-                $token = $result['access_token'];
-            } else {
-                $string = explode("&", $result)[0];
-                $token = explode("=", $string)[1];
-            }
 
-        }else{
-
+            $token = $this->getTokenFromResponse($result);
+        } else {
             $params = [
                 'grant_type' => "authorization_code",
                 "code" => $code,
@@ -101,14 +87,7 @@ class SDK
                 . "&" . http_build_query($params);
     
             $result = file_get_contents($url);
-            if($this->isJson($result)) {
-                $result = json_decode($result, true);
-                $token = $result['access_token'];
-            } else {
-                $string = explode("&", $result)[0];
-                $token = explode("=", $string)[1];
-            }
-
+            $token = $this->getTokenFromResponse($result);
         }
 
         return $token;
@@ -120,15 +99,14 @@ class SDK
 
         // Get userdata with access_token
         $userUrl = curl_init($provider['me_url']);
-
         curl_setopt($userUrl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($userUrl, CURLOPT_HEADER, 0);
         curl_setopt($userUrl, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/602.3.12 (KHTML, like Gecko) Version/10.0.2 Safari/602.3.12");
 
-        if(!empty($body)){
+        if(!empty($body)) {
             curl_setopt($userUrl, CURLOPT_POST, 1);
             curl_setopt($userUrl, CURLOPT_POSTFIELDS, $body);
-        }else{
+        } else {
             curl_setopt($userUrl, CURLOPT_HTTPHEADER, [
                 "Authorization: Bearer {$token}"
             ]);
@@ -143,6 +121,17 @@ class SDK
     {
         json_decode($string, true);
         return json_last_error() === JSON_ERROR_NONE;
+    }
+
+    public function getTokenFromResponse($result) {
+        if($this->isJson($result)) {
+            $result = json_decode($result, true);
+            $token = $result['access_token'];
+        } else {
+            $string = explode("&", $result)[0];
+            $token = explode("=", $string)[1];
+        }
+        return $token;
     }
 
 }
