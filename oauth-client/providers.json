@@ -27,12 +27,21 @@
         "me_url": "https://api.github.com/user"
     },
     "gitlab": {
-        "name": "GitLab",
+        "name": "GitHub",
         "id": "a291fbe5eca45e1dc2f4e64c6c1ce57c7e157ec0be7f057962f5d92a27c02de0",
         "secret": "c5dd8f4192e93ef398de9c568beda5ce2ffda58a3c19e71295d3506a583edd0f",
         "login_url" : "https://gitlab.com/oauth/authorize",
         "scope" : "read_user",
         "access_token_url": "https://gitlab.com/oauth/token",
         "me_url": "https://gitlab.com/user"
+    },
+    "discord": {
+        "name": "Discord",
+        "id": "866595506536579112",
+        "secret": "HKelmE1vxGWW7h4so3N_J9-eusL81Hsc",
+        "login_url" : "https://discord.com/api/oauth2/authorize",
+        "scope" : "identify",
+        "access_token_url": "https://discord.com/api/oauth2/token",
+        "me_url": "https://discord.com/api/user"
     }
 }

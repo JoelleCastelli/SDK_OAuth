@@ -60,7 +60,7 @@ class SDK
         $params = [
             'grant_type' => "authorization_code",
             "code" => $code,
-            "redirect_uri" => "https://localhost/auth-success?provider=$providerName"
+            "redirect_uri" => 'https://localhost/auth-success?provider='.$providerName
         ];
 
         $url = $provider['access_token_url'] . "?client_id=" .$provider['id']
