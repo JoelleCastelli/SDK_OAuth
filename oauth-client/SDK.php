@@ -20,7 +20,6 @@ class SDK
     function handleLogin()
     {
         $str = '';
-        // TODO un state par provider ? => $_SESSION[$provider['name']]['state']
         $_SESSION['state'] = bin2hex(random_bytes(20));
         foreach ($this->getProviders() as $provider => $data) {
             $str .= "<div>
