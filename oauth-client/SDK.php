@@ -58,18 +58,17 @@ class SDK
     function getToken($providerName, $code) {
         $provider = $this->getProviders()[$providerName];
 
-        $params = [
-            'grant_type' => "authorization_code",
-            "code" => $code,
-            "redirect_uri" => 'https://localhost/auth-success?provider='.$providerName
-        ];
-
-        $url = $provider['access_token_url'] . "?client_id=" .$provider['id']
-            . "&client_secret=" . $provider['secret']
-            . "&" . http_build_query($params);
-
         if(isset($provider['method_token']))
         {
+
+            $params = "client_id=" .$provider['id']
+            . "&client_secret=" . $provider['secret']
+            . "&grant_type=authorization_code" 
+            . "&code=" . $code
+            . "&redirect_uri=" .'https://localhost/auth-success?provider='.$providerName;
+
+            $url = $provider['access_token_url'];
+
             $curl = curl_init($url);
 
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -77,12 +76,30 @@ class SDK
 
             // Set request method to POST
             curl_setopt($curl, CURLOPT_POST, 1);
+            // Set query data here with CURLOPT_POSTFIELDS
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
 
-            $token = trim(curl_exec($curl));
+            $result = trim(curl_exec($curl));
             curl_close($curl);
-            print $token;
+            if($this->isJson($result)) {
+                $result = json_decode($result, true);
+                $token = $result['access_token'];
+            } else {
+                $string = explode("&", $result)[0];
+                $token = explode("=", $string)[1];
+            }
 
         }else{
+
+            $params = [
+                'grant_type' => "authorization_code",
+                "code" => $code,
+                "redirect_uri" => 'https://localhost/auth-success?provider='.$providerName
+            ];
+    
+            $url = $provider['access_token_url'] . "?client_id=" .$provider['id']
+                . "&client_secret=" . $provider['secret']
+                . "&" . http_build_query($params);
     
             $result = file_get_contents($url);
             if($this->isJson($result)) {
@@ -92,6 +109,7 @@ class SDK
                 $string = explode("&", $result)[0];
                 $token = explode("=", $string)[1];
             }
+
         }
 
         return $token;

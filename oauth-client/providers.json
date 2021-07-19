@@ -42,7 +42,7 @@
         "login_url" : "https://discord.com/api/oauth2/authorize",
         "scope" : "identify",
         "access_token_url": "https://discord.com/api/oauth2/token",
-        "me_url": "https://discord.com/api/user",
+        "me_url": "https://discord.com/api/oauth2/@me",
         "method_token": "POST"
     }
 }
