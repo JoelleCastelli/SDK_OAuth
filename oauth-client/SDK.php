@@ -70,30 +70,17 @@ class SDK
 
         if(isset($provider['method_token']))
         {
-            $curl = curl_init();
+            $curl = curl_init($url);
 
-            $curlParams = [
-                CURLOPT_URL =>  $url,
-                CURLOPT_POSTFIELDS => $params,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-            ];
-            var_dump("<br>");
-            var_dump($curlParams);
-            var_dump("<br>");
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 3);
 
-            curl_setopt_array($curl, $curlParams);
-            $token = curl_exec($curl);
-            var_dump("<br>");
-            var_dump($token);
-            var_dump("<br>");
-        
+            // Set request method to POST
+            curl_setopt($curl, CURLOPT_POST, 1);
+
+            $token = trim(curl_exec($curl));
             curl_close($curl);
+            print $token;
 
         }else{
     
